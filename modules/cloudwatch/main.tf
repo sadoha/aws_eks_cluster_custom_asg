@@ -22,7 +22,7 @@ resource "aws_autoscaling_policy" "heavy_out" {
   scaling_adjustment 			= 1
   adjustment_type 			= "ChangeInCapacity"
   cooldown 				= 10
-  autoscaling_group_name 		= "${var.autoscaling_groups_name}"
+  autoscaling_group_name 		= var.autoscaling_groups_name
 }
 
 resource "aws_autoscaling_policy" "heavy_in" {
@@ -30,7 +30,7 @@ resource "aws_autoscaling_policy" "heavy_in" {
   scaling_adjustment 			= -1
   adjustment_type 			= "ChangeInCapacity"
   cooldown 				= 10
-  autoscaling_group_name 		= "${var.autoscaling_groups_name}"
+  autoscaling_group_name 		= var.autoscaling_groups_name
 }
 
 resource "aws_cloudwatch_metric_alarm" "heavy_asg_cpu_usage_is_very_high" {
@@ -52,7 +52,9 @@ resource "aws_cloudwatch_metric_alarm" "heavy_asg_cpu_usage_is_very_high" {
 
   tags = map(
     "Name", "eks-${var.projectname}-${var.environment}",
-    "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "shared",
+    "Environment", "${var.environment}",
+    "Terraformed", "true",
+    "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "owned",
   )
 }
 
@@ -75,6 +77,8 @@ resource "aws_cloudwatch_metric_alarm" "heavy_asg_cpu_usage_is_very_low" {
 
   tags = map(
     "Name", "eks-${var.projectname}-${var.environment}",
-    "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "shared",
+    "Environment", "${var.environment}",
+    "Terraformed", "true",
+    "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "owned",
   )
 }

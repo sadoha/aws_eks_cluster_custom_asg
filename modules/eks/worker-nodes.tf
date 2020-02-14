@@ -7,10 +7,10 @@ data "template_file" "eks_nodes_userdata" {
   template = "${file("templates/eks_nodes_userdata.tpl")}"
 
   vars = {
-    clusterEndpoint            	= "${aws_eks_cluster.cluster.endpoint}"
-    clusterCertificateAuthority	= "${aws_eks_cluster.cluster.certificate_authority.0.data}"
-    clusterName               	= "${aws_eks_cluster.cluster.name}"
-    kubletExtraArgs             = "${var.kublet_extra_args}"
+    clusterEndpoint            	= aws_eks_cluster.cluster.endpoint
+    clusterCertificateAuthority	= aws_eks_cluster.cluster.certificate_authority.0.data
+    clusterName               	= aws_eks_cluster.cluster.name
+    kubletExtraArgs             = var.kublet_extra_args
   }
 }
 

@@ -16,6 +16,6 @@ variable "environment" {
 
 variable "countindex" {
   type    	= string
-  default 	= "2"
+  default 	= "3"
   description   = ""
 }

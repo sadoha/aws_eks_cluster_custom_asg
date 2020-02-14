@@ -86,4 +86,11 @@ resource "aws_eks_cluster" "cluster" {
     aws_iam_role_policy_attachment.cluster-AmazonEKSServicePolicy,
 //    aws_cloudwatch_log_group.eks
   ]
+
+  tags = map(
+    "Name", "eks-${var.projectname}-${var.environment}",
+    "Environment", "${var.environment}",
+    "Terraformed", "true",
+    "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "owned",
+  )
 }
