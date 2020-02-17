@@ -16,13 +16,14 @@ data:
 
 CONFIGMAPAWSAUTH
 ### 
-### ATTENCION
+### ATTENCION !!!!
 ###
-### Run terraform output config_map_aws_auth and save the configuration into a file, e.g. config_map_aws_auth.yaml
+### If worker nodes was not been attached:
+###
+### Uncomment and run terraform output config_map_aws_auth 
+### Save the configuration into a file, e.g. config_map_aws_auth.yaml
 ### Run kubectl apply -f config_map_aws_auth.yaml
 ### You can verify the worker nodes are joining the cluster via: kubectl get nodes --watch
-
-####CONFIGMAPAWSAUTH
 
 
   kubeconfig = <<KUBECONFIG
