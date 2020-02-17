@@ -14,6 +14,7 @@ data:
         - system:bootstrappers
         - system:nodes
 
+CONFIGMAPAWSAUTH
 ### 
 ### ATTENCION
 ###
@@ -21,7 +22,7 @@ data:
 ### Run kubectl apply -f config_map_aws_auth.yaml
 ### You can verify the worker nodes are joining the cluster via: kubectl get nodes --watch
 
-CONFIGMAPAWSAUTH
+####CONFIGMAPAWSAUTH
 
 
   kubeconfig = <<KUBECONFIG
@@ -54,3 +55,22 @@ users:
 KUBECONFIG
 }
 
+
+resource "local_file" "kubeconfig" {
+    content     = local.kubeconfig
+    file_permission      = "0600"
+    filename = "templates/kubeconfig"
+}
+
+
+resource "local_file" "config_map_aws_auth" {
+    content     = local.config_map_aws_auth
+    file_permission      = "0600"
+    filename = "templates/config_map_aws_auth.yaml"
+}
+
+resource "null_resource" "update_config_map_aws_auth" {
+  provisioner "local-exec" {
+    command = "kubectl apply -f ${local_file.config_map_aws_auth.filename} --kubeconfig ${local_file.kubeconfig.filename}"
+  }
+}

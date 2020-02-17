@@ -49,7 +49,7 @@ EOF
 
 
 resource "aws_cloudwatch_log_group" "eks" {
-  name              	= "/aws/eks/${aws_eks_cluster.cluster.name}/cluster"
+  name              	= "/aws/eks/cluster-${var.projectname}-${var.environment}/cluster"
   retention_in_days 	= var.cluster_log_retention_in_days
   kms_key_id        	= aws_kms_key.eks_log_group.arn
 
@@ -74,7 +74,7 @@ resource "aws_eks_cluster" "cluster" {
     public_access_cidrs       	= ["0.0.0.0/0"]
   }
 
-//  enabled_cluster_log_types 	= var.cluster_enabled_log_types
+  enabled_cluster_log_types 	= var.cluster_enabled_log_types
 
   timeouts {
     create = var.cluster_create_timeout
@@ -84,7 +84,7 @@ resource "aws_eks_cluster" "cluster" {
   depends_on = [
     aws_iam_role_policy_attachment.cluster-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.cluster-AmazonEKSServicePolicy,
-//    aws_cloudwatch_log_group.eks
+    aws_cloudwatch_log_group.eks
   ]
 
   tags = map(
@@ -94,3 +94,4 @@ resource "aws_eks_cluster" "cluster" {
     "kubernetes.io/cluster/cluster-${var.projectname}-${var.environment}", "owned",
   )
 }
+

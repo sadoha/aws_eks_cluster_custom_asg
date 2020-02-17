@@ -34,4 +34,3 @@ module "cloudwatch" {
   countindex                 	= "${var.countindex}"
   autoscaling_groups_name	= "${module.eks.autoscaling_groups_name}"
 }
-
