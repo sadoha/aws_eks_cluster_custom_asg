@@ -34,3 +34,19 @@ module "cloudwatch" {
   countindex                 	= "${var.countindex}"
   autoscaling_groups_name	= "${module.eks.autoscaling_groups_name}"
 }
+
+// Amazon Route 53
+module "r53" {
+  source                        = "../modules/r53"
+  projectname                   = "${var.projectname}"
+  environment                   = "${var.environment}"
+  countindex                    = "${var.countindex}"
+}
+
+// Elastic Container Registry Repository
+module "ecr" {
+  source                        = "../modules/ecr"
+  projectname                   = "${var.projectname}"
+  environment                   = "${var.environment}"
+  countindex                    = "${var.countindex}"
+}
