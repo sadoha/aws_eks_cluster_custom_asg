@@ -12,7 +12,7 @@ resource "aws_ecr_repository" "default" {
 }
 
 resource "aws_ecr_repository_policy" "default" {
-  repository = "${aws_ecr_repository.default.name}"
+  repository = aws_ecr_repository.default.name
 
   policy = <<EOF
 {
@@ -45,7 +45,7 @@ EOF
 }
 
 resource "aws_ecr_lifecycle_policy" "default" {
-  repository = "${aws_ecr_repository.default.name}"
+  repository = aws_ecr_repository.default.name
 
   policy = <<EOF
 {

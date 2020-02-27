@@ -19,7 +19,8 @@ resource "aws_launch_template" "eks" {
   image_id                      = data.aws_ami.eks_worker_ami.id
   instance_type                 = var.instance_types 
   key_name                      = var.key_pair
-  user_data                     = "${base64encode(data.template_file.eks_nodes_userdata.rendered)}"
+  user_data                     = base64encode(data.template_file.eks_nodes_userdata.rendered)
+ # user_data                     = "${base64encode(data.template_file.eks_nodes_userdata.rendered)}"
 
   iam_instance_profile {
     name                        = aws_iam_instance_profile.nodes.name
@@ -105,7 +106,7 @@ resource "aws_lb_target_group" "eks" {
 
 
 resource "aws_autoscaling_group" "eks" {
-  target_group_arns                     = ["${aws_lb_target_group.eks.arn}"]
+  target_group_arns                     = [aws_lb_target_group.eks.arn]
   force_delete                          = true
   health_check_grace_period             = 30
   health_check_type                     = "EC2"
@@ -115,8 +116,8 @@ resource "aws_autoscaling_group" "eks" {
   vpc_zone_identifier                   = var.subnet_private_id
 
   launch_template {
-    id                                  = "${aws_launch_template.eks.id}"
-    version                             = "${aws_launch_template.eks.latest_version}"
+    id                                  = aws_launch_template.eks.id
+    version                             = aws_launch_template.eks.latest_version
   }
 
   lifecycle {

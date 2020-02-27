@@ -63,7 +63,6 @@ resource "local_file" "kubeconfig" {
     filename = "templates/kubeconfig"
 }
 
-
 resource "local_file" "config_map_aws_auth" {
     content     = local.config_map_aws_auth
     file_permission      = "0600"

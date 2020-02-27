@@ -15,9 +15,9 @@ resource "aws_route53_zone" "route53_zone" {
 }
 
 resource "aws_route53_record" "subdomains" {  
-  count   		= "${length(var.subdomains)}"  
-  zone_id 		= "${aws_route53_zone.route53_zone.zone_id}"  
-  name    		= "${element(var.subdomains, count.index)}"  
+  count   		= length(var.subdomains)  
+  zone_id 		= aws_route53_zone.route53_zone.zone_id  
+  name    		= element(var.subdomains, count.index)  
   type    		= "CNAME"  
   records 		= [var.domainname]  
   ttl     		= "300"
