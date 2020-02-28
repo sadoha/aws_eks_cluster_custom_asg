@@ -33,7 +33,7 @@ module "eks" {
   subnet_private_id		= "${module.vpc.subnet_private_id}"
   key_pair			= "${module.key_pair.key_pair_id}"
 }
-/*
+
 // Amazon CloudWatch
 module "cloudwatch" {
   source                        = "../modules/cloudwatch"
@@ -42,7 +42,7 @@ module "cloudwatch" {
   countindex                 	= "${var.countindex}"
   autoscaling_groups_name	= "${module.eks.autoscaling_groups_name}"
 }
-*/
+
 // An example of default configuration environment inside of cloud 
 module "k8s" {
   source                        = "../modules/k8s"
