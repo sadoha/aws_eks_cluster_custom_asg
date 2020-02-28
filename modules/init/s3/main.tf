@@ -3,11 +3,11 @@ resource "aws_s3_bucket" "tslog_bucket" {
   acl 			= "log-delivery-write"
 
   versioning {
-    enabled             = "true"
+    enabled             = true
   }
 
   lifecycle {
-    prevent_destroy     = "false"
+    prevent_destroy     = false
   }
 
   tags   = "${merge(map("Name", "s3-tslogs-bucket-${var.name}"), var.tags)}"
@@ -18,15 +18,15 @@ resource "aws_s3_bucket" "terraform_state" {
   acl                   = "private"
 
   versioning {
-    enabled             = "true"
+    enabled             = true
   }
 
   lifecycle {
-    prevent_destroy     = "false"
+    prevent_destroy     = false
   }
 
   logging {
-    target_bucket 	= "${aws_s3_bucket.tslog_bucket.id}"
+    target_bucket 	= aws_s3_bucket.tslog_bucket.id
     target_prefix 	= "log/"
   }
 
