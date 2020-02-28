@@ -1,4 +1,10 @@
 locals {
+  eks_nodes_userdata = <<EKSNODESUSERDATA
+#!/bin/bash
+set -o xtrace
+/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.cluster.endpoint}' --b64-cluster-ca '${aws_eks_cluster.cluster.certificate_authority.0.data}' '${aws_eks_cluster.cluster.name}' --kubelet-extra-args '${var.kublet_extra_args}'
+EKSNODESUSERDATA
+
   config_map_aws_auth = <<CONFIGMAPAWSAUTH
 
 apiVersion: v1
@@ -56,6 +62,11 @@ users:
 KUBECONFIG
 }
 
+resource "local_file" "eks_nodes_userdata" {
+    content     = local.eks_nodes_userdata
+    file_permission      = "0600"
+    filename = "templates/eks_nodes_userdata.tpl"
+}
 
 resource "local_file" "kubeconfig" {
     content     = local.kubeconfig

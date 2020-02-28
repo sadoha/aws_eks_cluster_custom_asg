@@ -70,6 +70,6 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 }
 
 resource "aws_iam_instance_profile" "nodes" {
-  name = "nodes-${var.projectname}-${var.environment}"
+  name = "nodes-${var.projectname}-${var.environment}-instance-profile"
   role = aws_iam_role.nodes.name
 }

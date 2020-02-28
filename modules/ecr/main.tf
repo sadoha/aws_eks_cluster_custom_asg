@@ -79,8 +79,3 @@ resource "aws_ecr_lifecycle_policy" "default" {
 EOF
 }
 
-resource "null_resource" "basic_auth_credentials" {
-  provisioner "local-exec" {
-    command = "$(aws ecr get-login --no-include-email --region ${data.aws_region.current.id})"
-  }
-}

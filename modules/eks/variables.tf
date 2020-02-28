@@ -83,7 +83,7 @@ variable "cluster_delete_timeout" {
 
 variable "instance_types" {
   type          = string
-  default       = "m4.large"
+  default       = "t3.large"
   description   = "The instance types of a EKS cluster"
 }
 
